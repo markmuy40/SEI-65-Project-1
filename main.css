@@ -1,0 +1,61 @@
+* {
+
+}
+
+
+.tracker {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grid-wrapper{
+
+}
+
+.grid {
+
+}
+
+.controls {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.movement {
+  display: flex;
+  align-items: center;
+}
+
+
+.left {
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  background: red;
+  color: white;
+}
+
+.middle {
+  text-align: center;
+
+}
+
+
+.right {
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  background: blue;
+  color: white;
+}
+
+.fire {
+
+}
+
+.shoot{
+  border: 2px solid green;
+  width: 120px;
+}
