@@ -1,26 +1,72 @@
 * {
-
+box-sizing: border-box;
+  background: black;
 }
 
+body {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 700px;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  color: red;
+}
 
 .tracker {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  color: white;
+  padding: 40px;
 }
 
+.lives {
+}
+
+.score {
+}
+.grid-container {
+  display: flex;
+  height: 100%;
+  margin: 0 auto;
+}
+
+
 .grid-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
 
 }
 
 .grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  height: 600px;
+  width: 600px;
 
+}
+
+.grid div {
+  border: 1px solid white;
+  flex-grow: 1;
+  height: 10%;
+  width:10%;
+  color:white;
 }
 
 .controls {
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  padding-top: 40px;
 }
 
 .movement {
@@ -38,7 +84,13 @@
 }
 
 .middle {
-  text-align: center;
+  width: 80px;
+  height: 80px;
+  background: url('./images/kisspng-joystick-game-controllers-computer-icons-arcade-co-5b1845ccdd0373.3147148015283173889053.png');
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  background-position: center;
+
 
 }
 
@@ -56,6 +108,55 @@
 }
 
 .shoot{
-  border: 2px solid green;
-  width: 120px;
+  width: 140px;
+  height:60px;
+  background: green;
+  color: white;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.footer {
+padding: 30px;
+}
+.start {
+  display:flex;
+  justify-content: space-around;
+  padding:40px;
+}
+
+.reset {
+  width: 100px;
+  height: 60px;
+  background: yellow;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.play { 
+  width: 100px;
+  height: 60px;
+  background: yellow;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* player CSS */
+.grid div.player {
+  background:green;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
+/* alien CSS */
+.grid div.alien {
+  background:purple;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
