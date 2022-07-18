@@ -13,6 +13,12 @@ function init() {
   const cellCount = width * width
   const cells = []// targetting each div cell created 
   
+  // ! player variables
+  const playerClass = 'player' 
+  const startPosition = '94'
+  let currentPosition = startPosition
+  
+  
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -21,31 +27,52 @@ function init() {
       cells.push(cell)
       grid.appendChild(cell)
     }
+    addPlayer(startPosition)
   }
   makeGrid()
+  
 
 
   //! player functions
-  // // variables
-  const playerClass = 'player' 
-  const startPosition = '95'
-  let currentPosition = startPosition
   
-  // function addPlayer(position){
-  // cells[position].classList.add(playerClass)
-  // }
-  
-  // function removePlayer(position){
-  // cells[position].classList.remove(playerClass)
-  // }
-  
-  // function playerMovement(){
-  
-  // ! variables
-  
-  // const left = keycode || left = keycode || left = div class
-  // const right = keycode  || right = keycode number || right = div class
-  
+
+  // ! add player
+  function addPlayer(position){
+    cells[position].classList.add(playerClass)
+  }
+
+  // ! remove player
+  function removePlayer(position){
+    cells[position].classList.remove(playerClass)
+  }
+
+  // ! player movement
+  function playerMovement(event){
+    
+    // ! variables
+    const keyCode = event.keyCode
+    const left = 37
+    const leftAlt = 65 // || left = div class
+    const right = 39
+    const rightAlt = 68
+    const space = 32  //|| right = 68 || right = div class
+    console.log(keyCode)
+    //use remove player function
+    removePlayer(currentPosition)
+
+    if ((left === keyCode || leftAlt === keyCode) && currentPosition % width !== 0) {
+      currentPosition -= 1
+      console.log('left clicked')
+    } else if ((right === keyCode || rightAlt === keyCode) && currentPosition % width !== width - 1){
+      currentPosition += 1
+      console.log('right clicked')
+    } else if (space === keyCode){
+      console.log('fire clicked')
+    } else {
+      console.log('invalid key')
+    }
+
+    addPlayer(currentPosition)
   // removePlayer(currentPosition)
   // execution
   // if (left === keycode && currentPosition % width !== 0) {
@@ -55,8 +82,34 @@ function init() {
   // currentPosition += 1
   //   }
   //   addPlayer(position)
+  }
+  document.addEventListener('keydown', playerMovement)
+
+  // ! firing
+  
+  // Const shotClass = 'shot' use image/icon
+  
+  // function addShot(position){
+  // cells[position].classList.add(shotClass)
   // }
-  // .addEventListener('keydown', playerMovement)
+  // function removeAlien(position){
+  // cells[position].classList.remove(shotClass)
+  // }
+  
+  // function playerShoot(){
+  // const fire = (keycode) || fire = div class
+  
+  // shotTime = setInterval(() => {
+  
+  // shot = player.classList.add() + 10 
+  // if(shot < (bottom row lowest number) {
+  // shot += 10
+  // } else {
+  // return deadAlien()
+  //   },  1000)
+  // }
+  
+  // document.addEventListener('keyup', playerShoot)
   // ! aliens
 
   // const alienClass = 'alien'// alienclass in CSS
@@ -151,7 +204,7 @@ function init() {
   // }
   
   // document.addEventListener('keyup', playerShoot)
-
+  
 }
 
 window.addEventListener('DOMContentLoaded', init)
