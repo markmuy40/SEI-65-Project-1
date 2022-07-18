@@ -18,7 +18,6 @@ function init() {
   const startPosition = '94'
   let currentPosition = startPosition
   
-  
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -55,7 +54,7 @@ function init() {
     const leftAlt = 65 // || left = div class
     const right = 39
     const rightAlt = 68
-    const space = 32  //|| right = 68 || right = div class
+    
     console.log(keyCode)
     //use remove player function
     removePlayer(currentPosition)
@@ -66,12 +65,10 @@ function init() {
     } else if ((right === keyCode || rightAlt === keyCode) && currentPosition % width !== width - 1){
       currentPosition += 1
       console.log('right clicked')
-    } else if (space === keyCode){
-      console.log('fire clicked')
     } else {
       console.log('invalid key')
     }
-
+    
     addPlayer(currentPosition)
   // removePlayer(currentPosition)
   // execution
@@ -87,29 +84,39 @@ function init() {
 
   // ! firing
   
-  // Const shotClass = 'shot' use image/icon
+  // ! variables
+  const shotClass = 'shot'
+  let shotPosition = currentPosition
+
   
-  // function addShot(position){
-  // cells[position].classList.add(shotClass)
-  // }
-  // function removeAlien(position){
-  // cells[position].classList.remove(shotClass)
-  // }
+  function addShot(position){
+    cells[shotPosition].classList.add(shotClass)
+  }
+
+  function removeShot(position){
+    cells[shotPosition].classList.remove(shotClass)
+  }
   
-  // function playerShoot(){
-  // const fire = (keycode) || fire = div class
+  function playerShoot(){
+    const keyCode = event.keyCode
+    const fire = 32  //|| right = 68 || right = div class
+    //console.log(keyCode)
+    removeShot(shotPosition)
+    shotPosition -= width
+    addShot(shotPosition)
+
+
+    
+   
+    
+    // if(shot < (bottom row lowest number) {
+    // shot += 10
+    // } else {
+    // return deadAlien()
+    //   },  1000)
   
-  // shotTime = setInterval(() => {
-  
-  // shot = player.classList.add() + 10 
-  // if(shot < (bottom row lowest number) {
-  // shot += 10
-  // } else {
-  // return deadAlien()
-  //   },  1000)
-  // }
-  
-  // document.addEventListener('keyup', playerShoot)
+  }
+  document.addEventListener('keyup', playerShoot)
   // ! aliens
 
   // const alienClass = 'alien'// alienclass in CSS
@@ -207,47 +214,5 @@ function init() {
   
 }
 
+
 window.addEventListener('DOMContentLoaded', init)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

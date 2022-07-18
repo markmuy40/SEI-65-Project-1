@@ -154,6 +154,11 @@ padding: 30px;
   background-size: contain;
 }
 
+.grid div.shot {
+  background: blue;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
 /* alien CSS */
 .grid div.alien {
