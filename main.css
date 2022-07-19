@@ -7,14 +7,26 @@ body {
   display:flex;
   flex-direction: column;
   justify-content: center;
+  background-image: url(images/wasteland.png);
+  background-repeat: no-repeat;
+  background-position: center;
   /* width: 700px; */
 }
 
 h1 {
   display: flex;
   justify-content: center;
+  align-items: center;
   color: red;
+  text-align: center;
+  background-image: url(./images/pngegg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   font-size: 100px;
+  margin: 0 auto;
+  height: 250px;
+
 }
 
 .tracker {
@@ -25,7 +37,7 @@ h1 {
   padding: 40px;
 }
 
-.lives {
+.lives {  
 }
 
 .score {
@@ -57,11 +69,11 @@ h1 {
 }
 
 .grid div {
-  border: 1px solid white;
+  border: 1px solid grey;
   flex-grow: 1;
   height: 10%;
   width:10%;
-  color:white;
+  color:grey;
 }
 
 .controls {
@@ -149,20 +161,30 @@ padding: 30px;
 
 /* player CSS */
 .grid div.player {
-  background:green;
+  background: url(images/NicePng_daryl-dixon-png_1695079.png);
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
 }
 
 .grid div.shot {
-  background: blue;
+  background: url(images/arrow-bow-png-images-free-download-arrow-png-572850.png);
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
 }
 
 /* alien CSS */
 .grid div.alien {
-  background:purple;
+  background: url(images/zombie.png);
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
+}
+
+.grid div.bomb {
+  background: url(images/zprojectile.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }

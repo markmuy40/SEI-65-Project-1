@@ -32,7 +32,7 @@ function init() {
   
 
 
-  //! player functions
+  //! player functions ==================================================================================
   
 
   // ! add player
@@ -44,7 +44,7 @@ function init() {
   function removePlayer(position){
     cells[position].classList.remove(playerClass)
   }
-
+  
   // ! player movement
   function playerMovement(event){
     
@@ -54,8 +54,8 @@ function init() {
     const leftAlt = 65 // || left = div class
     const right = 39
     const rightAlt = 68
-    
-    console.log(keyCode)
+    const firing = 32
+    //console.log(keyCode)
     //use remove player function
     removePlayer(currentPosition)
 
@@ -65,11 +65,13 @@ function init() {
     } else if ((right === keyCode || rightAlt === keyCode) && currentPosition % width !== width - 1){
       currentPosition += 1
       console.log('right clicked')
+    } else if (firing === keyCode){
+      console.log('shots fired')
     } else {
       console.log('invalid key')
     }
-    
-    addPlayer(currentPosition)
+  
+  addPlayer(currentPosition)
   // removePlayer(currentPosition)
   // execution
   // if (left === keycode && currentPosition % width !== 0) {
@@ -80,64 +82,97 @@ function init() {
   //   }
   //   addPlayer(position)
   }
-  document.addEventListener('keydown', playerMovement)
+document.addEventListener('keydown', playerMovement)
 
-  // ! firing
+  // ! FIRING ================================================================================
   
   // ! variables
   const shotClass = 'shot'
-  let shotPosition = currentPosition
 
-  
-  function addShot(position){
+  function addShot(shotPosition){
     cells[shotPosition].classList.add(shotClass)
   }
 
-  function removeShot(position){
+  function removeShot(shotPosition){
     cells[shotPosition].classList.remove(shotClass)
   }
   
   function playerShoot(){
     const keyCode = event.keyCode
-    const fire = 32  //|| right = 68 || right = div class
+    const firing = 32
+    //|| right = 68 || right = div class
     //console.log(keyCode)
-    removeShot(shotPosition)
-    shotPosition -= width
-    addShot(shotPosition)
+    // ! variables
+    let shotPosition = currentPosition
+    let timer
 
-
-    
-   
+    // ! execution
+    if (firing === keyCode) {
+    // console.log('fired again')
+      timer = setInterval(() =>{
+        removeShot(shotPosition)
+        shotPosition -= width
+        addShot(shotPosition)
+        console.log(shotPosition)
+      }, 300)
+    } else if (shotPosition < 0) {
+      clearInterval(timer)
+      //removeShot(shotPosition)
+    }
     
     // if(shot < (bottom row lowest number) {
     // shot += 10
     // } else {
     // return deadAlien()
     //   },  1000)
-  
   }
+  
   document.addEventListener('keyup', playerShoot)
-  // ! aliens
+  
+  
+  // ! aliens ============================================================================================
+  
+  // ! create aliens into grid
+  //create alien array. Number should match up to squares in grid.
+  // ! variables
+  const aliens = [2,3,4,5,6,12,13,14,15,16]
+  const alienClass = 'alien'
+  
+  // ! execution
+  //create alien array into grid
+  function createAliens () {
+    for (i = 0; i < cellCount; i++) {
+      cells[aliens[i]].classList.add(alienClass)
+      //console.log(cells[aliens[i]])
+    }
 
-  // const alienClass = 'alien'// alienclass in CSS
-  // const startPosition = (numerical number for bottom/middle of grid)
-  // let currentPosition = startPosition
+  }
+  // ! event
+  createAliens()
+  
+  
   // //use setInterval for movement
   
-  // function addAlien(position){
-  // cells[position].classList.add(alienClass)
-  // }
-  
-  // function removeAlien(position){
-  // cells[position].classList.remove(alienClass)
-  // }
-  // removeAlien()
   
   
-  // // ! function for left movement
-  // function alienLeft(){
-  // alien.classList.remove()  -1 alien.ClassList.add()
-  // }
+
+  
+//   // ! function for left movement
+  
+  function alienLeft(){
+  // ! variables
+    let alienTimer
+// ! execution
+
+    alienTimer = setInterval(() => {
+      for(let i = 0; 1 < aliens.length; i++)
+        cells[aliens[i]] -= 1
+      console.log(aliens)
+    }, 500)
+    createAliens()
+  }
+  
+  alienLeft()
   
   // // ! function for right movement
   // function alienRight(){
