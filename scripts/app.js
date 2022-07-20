@@ -123,9 +123,10 @@ console.log(grid)
           removeShot(shotPosition)
           shotPosition -= width
           addShot(shotPosition)
-          console.log('inside the interval',shotPosition)
-        } else if (shotPosition === aliens) {
-          console.log('matched')
+          console.log('shot  inside the interval',shotPosition)
+          console.log('aliens inside the interval', aliens)
+        //} else if (shotPosition === aliens) {
+          //console.log('matched')
         } else {
           clearInterval(timer)
           //console.log('out of range')
@@ -134,12 +135,12 @@ console.log(grid)
     }
   
   
-   // if (cells.classList.contains.shotClass === cells.classList.contains.alienClass){
-      console.log('where aliens are', cell[aliens])
-      console.log('outside if loop', shotPosition)
-      //console.log('matched')
+    // if (cells.classList.contains.shotClass === cells.classList.contains.alienClass){
+    console.log('where aliens are', cell[aliens])
+    console.log('outside if loop', shotPosition)
+    //console.log('matched')
     //} else {
-      //console.log('wtf?!')
+    //console.log('wtf?!')
     //}
 
   }
