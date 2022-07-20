@@ -117,14 +117,22 @@ document.addEventListener('keydown', playerMovement)
           removeShot(shotPosition)
           shotPosition -= width
           addShot(shotPosition)
+          //console.log(shotPosition)
         } else {
           clearInterval(timer)
           console.log('out of range')
         }
       }, 300)
     }
-  }
   
+  
+  if (cells[shotPosition] === cells[aliens]){
+    console.log(cells[shotPosition])
+    console.log('matched')
+  } else {
+    console.log('wtf?!')
+  }
+}
   /*if (shotPosition > 0)*/ 
   //       removeShot(shotPosition)
   //       shotPosition -= width
@@ -150,6 +158,7 @@ document.addEventListener('keydown', playerMovement)
   // ! variables
   let aliens = [2,3,4,5,6,12,13,14,15,16]
   const alienClass = 'alien'
+  console.log(typeof alienClass)
   
   // ! execution
   //create alien array into grid
@@ -217,19 +226,24 @@ document.addEventListener('keydown', playerMovement)
     // ! execution
     timer = setInterval(() =>{
       console.log(aliens)
-      if (aliens[aliens.length - 1] % width !== width - 1){
+      const rowIsEven = Math.floor(aliens[0] / 10) % 2 === 0
+
+      if (rowIsEven && aliens[aliens.length - 1] % width !== width - 1){
         aliensRight()
         console.log(aliens)
-      } else {
-        aliensDown()
+      } else if (!rowIsEven && aliens[0] % width !== 0) {
+        aliensLeft()
         //clearInterval(timer)
         //aliensLeft()
+      } else {
+        aliensDown()
       }
     }, 500) 
-    //   if (aliens[0] % width !== 0) { 
+
+     
     // timer = setInterval(() => {
-    //   console.log('left start', aliens)
-    
+    //   if (aliens[0] % width !== 0) { 
+    //     console.log('left start', aliens)
     //     aliensLeft()
     //   } else {
     //     aliensDown()
@@ -277,6 +291,7 @@ document.addEventListener('keydown', playerMovement)
   // }
 
   // ! hits
+  
   
   // Const shotClass = 'shot' use image/icon
   
