@@ -1,4 +1,8 @@
 function init() {
+const start = document.querySelector('.play')
+console.log(start)
+const reset = document.querySelector('.reset')
+console.log(reset)
 
   // ! make the grid  
 
@@ -71,7 +75,7 @@ function init() {
       console.log('invalid key')
     }
   
-  addPlayer(currentPosition)
+    addPlayer(currentPosition)
   // removePlayer(currentPosition)
   // execution
   // if (left === keycode && currentPosition % width !== 0) {
@@ -90,7 +94,7 @@ document.addEventListener('keydown', playerMovement)
   const shotClass = 'shot'
 
   function addShot(shotPosition){
-    cells[shotPosition].classList.add(shotClass)
+    if (shotPosition > 0)cells[shotPosition].classList.add(shotClass)
   }
 
   function removeShot(shotPosition){
@@ -100,34 +104,43 @@ document.addEventListener('keydown', playerMovement)
   function playerShoot(){
     const keyCode = event.keyCode
     const firing = 32
-    //|| right = 68 || right = div class
-    //console.log(keyCode)
+    
     // ! variables
     let shotPosition = currentPosition
     let timer
 
     // ! execution
-    if (firing === keyCode) {
-    // console.log('fired again')
-      timer = setInterval(() =>{
-        removeShot(shotPosition)
-        shotPosition -= width
-        addShot(shotPosition)
-        console.log(shotPosition)
-      }, 300)
-    } else if (shotPosition < 0) {
-      clearInterval(timer)
-      //removeShot(shotPosition)
-    }
+    if (firing === keyCode ) {
     
-    // if(shot < (bottom row lowest number) {
-    // shot += 10
-    // } else {
-    // return deadAlien()
-    //   },  1000)
+      timer = setInterval(() => {
+        if (shotPosition > 0)  {
+          removeShot(shotPosition)
+          shotPosition -= width
+          addShot(shotPosition)
+        } else {
+          clearInterval(timer)
+          console.log('out of range')
+        }
+      }, 300)
+    }
   }
   
-  document.addEventListener('keyup', playerShoot)
+  /*if (shotPosition > 0)*/ 
+  //       removeShot(shotPosition)
+  //       shotPosition -= width
+  //       addShot(shotPosition)
+  //       console.log(shotPosition)
+      
+  //   } else {
+  //     clearInterval(timer)
+  //   }, 300)
+  //   }
+  // }
+  
+  
+  
+  
+  document.addEventListener('keydown', playerShoot)
   
   
   // ! aliens ============================================================================================
@@ -135,57 +148,112 @@ document.addEventListener('keydown', playerMovement)
   // ! create aliens into grid
   //create alien array. Number should match up to squares in grid.
   // ! variables
-  const aliens = [2,3,4,5,6,12,13,14,15,16]
+  let aliens = [2,3,4,5,6,12,13,14,15,16]
   const alienClass = 'alien'
   
   // ! execution
   //create alien array into grid
-  function createAliens () {
-    for (i = 0; i < cellCount; i++) {
-      cells[aliens[i]].classList.add(alienClass)
-      //console.log(cells[aliens[i]])
-    }
-
+  function createAliens(){
+    // try for each alien in aliens array - add alien class tho th cell with index of each alien
+    aliens.forEach(alien =>{
+      cells[alien].classList.add(alienClass)
+    })
   }
   // ! event
   createAliens()
   
-  
-  // //use setInterval for movement
-  
-  
-  
 
-  
-//   // ! function for left movement
-  
-  function alienLeft(){
+  function deleteAliens(){
+    aliens.forEach(alien => cells[alien].classList.remove(alienClass))
+  }
+
+  function aliensLeft(){
   // ! variables
-    let alienTimer
-// ! execution
-
-    alienTimer = setInterval(() => {
-      for(let i = 0; 1 < aliens.length; i++)
-        cells[aliens[i]] -= 1
-      console.log(aliens)
-    }, 500)
+  //aliens in global variable
+    //console.log('left start', aliens)
+    deleteAliens()
+    // use variable 'aliens and modify by -1 (use map?)
+    aliens = aliens.map(alien => alien - 1)
+    //console.log('going left', aliens)
     createAliens()
   }
-  
-  alienLeft()
-  
-  // // ! function for right movement
-  // function alienRight(){
-  // alien.classList.remove()  +1 alien.ClassList.add()
-  // }
-  
-  // function for moving downward
-  // function alienDown(){
-  // removeAlien(currentPosition)  +10 addAlien(CurrentPosition)
-  // }
-  
-  // ! removing aliens
+  // ! event
+  //aliensLeft()
 
+
+
+  function aliensRight(){
+  // ! variables
+  //aliens in global variable
+    //console.log('right start',aliens)
+    deleteAliens()
+    // use variable 'aliens and modify by +1 (use map?)
+    aliens = aliens.map(alien => alien + 1)
+    //console.log('going right', aliens)
+    createAliens()
+  }
+  // ! event
+  //aliensRight()
+
+  function aliensDown(){
+  // ! variables
+  //aliens in global variable
+    //console.log('down start',aliens)
+    deleteAliens()
+    // use variable 'aliens and modify by +1 (use map?)
+    aliens = aliens.map(alien => alien + width)
+    //console.log('going down', aliens)
+    createAliens()
+  }
+  // ! event
+  //aliensDown()
+
+  // ! movement
+
+  function aliensMove(){
+    //variables
+    let timer
+
+    // ! execution
+    timer = setInterval(() =>{
+      console.log(aliens)
+      if (aliens[aliens.length - 1] % width !== width - 1){
+        aliensRight()
+        console.log(aliens)
+      } else {
+        aliensDown()
+        //clearInterval(timer)
+        //aliensLeft()
+      }
+    }, 500) 
+    //   if (aliens[0] % width !== 0) { 
+    // timer = setInterval(() => {
+    //   console.log('left start', aliens)
+    
+    //     aliensLeft()
+    //   } else {
+    //     aliensDown()
+    //     clearInterval(timer)
+    //   }
+    // }, 500)  
+  
+
+
+  }
+  //aliensMove()
+
+  
+
+  
+  
+
+  
+  // detect when they hit the end move them 
+  // down. switch direction
+  
+  // ! game conditions score etc ======================================================================================================
+  
+  // ! alien
   // function deadAlien() {
   // If (alien currentPosition === shot currentPosition){
   // removeAlien() + (add empty element to keep spacing
@@ -194,7 +262,11 @@ document.addEventListener('keydown', playerMovement)
   // shot -= 10 ( whatever width the grid is)
   // }
   
-  
+  // if(shot < (bottom row lowest number) {
+  // shot += 10
+  // } else {
+  // return deadAlien()
+  //   },  1000)
   
   // alien collision -
   // if (alien === player) {
@@ -203,25 +275,8 @@ document.addEventListener('keydown', playerMovement)
   // (alien ===  cell.length - 9)
   // return gameOver()
   // }
-  
-  // function addAlien(position){
-  // cells[position].classList.add(alien)
-  // }
 
-  // function removeAlien(position){
-  // cells[position].classList.remove(alien)
-  // }
-  
-  // detect when they hit the end move them 
-  // down. switch direction
-  
-  
-  
-
-  
-  
-  
-  // ! firing
+  // ! hits
   
   // Const shotClass = 'shot' use image/icon
   
@@ -247,6 +302,8 @@ document.addEventListener('keydown', playerMovement)
   
   // document.addEventListener('keyup', playerShoot)
   
+  // ! updating score
+
 }
 
 
