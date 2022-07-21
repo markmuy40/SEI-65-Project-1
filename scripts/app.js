@@ -4,18 +4,18 @@ function init() {
   const reset = document.querySelector('.reset')
   //console.log(reset)
   const scoreDisplay = document.querySelector('.showscore')
-  console.log(scoreDisplay)
+  //console.log(scoreDisplay)
   const livesDisplay = document.querySelector('.showlives')
-  console.log(livesDisplay)
+  //console.log(livesDisplay)
   
   const audio1 = document.querySelector('.audio1')
-  console.log(audio1)
+  //console.log(audio1)
   const audio2 = document.querySelector('.audio2')
-  console.log(audio2)
+  //console.log(audio2)
   const audio3 = document.querySelector('.audio3')
-  console.log(audio3)
+  //console.log(audio3)
   const audio4 = document.querySelector('.audio4')
-  console.log(audio4)
+  //console.log(audio4)
   // multiple audio means that SFX aren't chopped or removed as each audio 
   // function has a specific channel
   let score = 0
@@ -159,8 +159,10 @@ function init() {
             //removeAliens()
             console.log('after', aliens)
             removeShot(shotPosition)
-            
             createAliens()
+            clearInterval(shotTimer)
+          } else  if (aliens.length === 0){
+            gameOver()
             clearInterval(shotTimer)
             
             
@@ -188,7 +190,7 @@ function init() {
   // ! create aliens into grid
   //create alien array. Number should match up to squares in grid.
   // ! variables
-  let aliens = [62,63,64,65,66]  
+  let aliens = [2,3,4,5,6,7,12,13,14,15,16,17,22,23,24,25,26,27]  
   
   const alienClass = 'alien'
   //console.log(typeof alienClass)
@@ -275,29 +277,36 @@ function init() {
       } else {
         aliensDown()
       }
-      if (aliens.find(alienIndex => alienIndex === currentPosition || alienIndex > 99)) {
-        console.log('game over')
+      if (aliens.find(alienIndex => alienIndex === currentPosition || alienIndex > (width * width) - 2)) {
+        gameOver()
         clearInterval(alienTimer)
       }
-    }, 500) 
+    }, 200) 
   }
 
 
-  // ! alien projectile
+  // ! alien projectile 
+  // ?================================================================================= 
   const bombClass = 'bomb'
   
   function addBomb(bombPosition){
     cells[bombPosition].classList.add(bombClass)
   }
 
+
   function removeBomb(bombPosition){
     cells[bombPosition].classList.remove(bombClass)
   }
 
-  function bombStart(){
-    const randomZombie = Math.floor(Math.random() * aliens.length)
-  }
 
+  function bombStart(){
+    let zombieTimer
+    const randomIndex = Math.floor(Math.random() * aliens.length)
+    console.log(aliens[randomIndex])
+
+    bombPosition = aliens[randomIndex]
+  }
+//bombStart()
 
 
 
@@ -327,7 +336,7 @@ function init() {
   
   // ! game start
   function startGame() {
-    walkingDead()  
+    //walkingDead()  
     addPlayer(startPosition)
     createAliens()
     aliensMove()
@@ -344,6 +353,15 @@ function init() {
 
   }
   reset.addEventListener('click', resetGame)
+
+  // ! game over
+  function gameOver(){
+    //deleteAliens()
+    //clearInterval(alienTimer)
+    //clearInterval(shotTimer)
+    setTimeout(() => alert(`You scored ${score} points!`), 300)
+  }
+
   //prevent space bar from scrolling, but still allows for firing.
   window.addEventListener('keydown', (event) => {  
     if (event.keyCode === 32 && event.target === document.body) {  
