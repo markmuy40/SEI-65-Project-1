@@ -15,17 +15,13 @@ body {
 }
 
 h1 {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  text-align: center;
   background-image: url(images/walking\ dead\ header.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   margin: 0 auto;
-  height: 250px;
-  width: 1000px;
+  height: 200px;
+  width: 600px;
   font-size: 60px;
 
 }
@@ -73,6 +69,7 @@ h1 {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  border: 3px solid grey;
 }
 
 .grid div {

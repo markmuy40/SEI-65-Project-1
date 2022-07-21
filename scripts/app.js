@@ -4,10 +4,11 @@ function init() {
   const reset = document.querySelector('.reset')
   //console.log(reset)
   const scoreDisplay = document.querySelector('.showscore')
-  console.log(scoreDisplay)
+  //console.log(scoreDisplay)
   const livesDisplay = document.querySelector('.lives')
   //console.log(livesDisplay)
-  
+  const audio = document.querySelector('audio')
+  console.log(audio)
   let score = 0
   let lives = 3
 
@@ -34,7 +35,7 @@ function init() {
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      //cell.innerText = i //remove once happy with design and no longer need to crate more functions for movement.
+      cell.innerText = i //remove once happy with design and no longer need to crate more functions for movement.
       cell.dataset.index = i
       cells.push(cell)
       grid.appendChild(cell)
@@ -85,6 +86,7 @@ function init() {
     }
   
     addPlayer(currentPosition)
+    
   // removePlayer(currentPosition)
   // execution
   // if (left === keycode && currentPosition % width !== 0) {
@@ -101,7 +103,7 @@ function init() {
   
   // ! variables
   const shotClass = 'shot'
-  let shotPosition
+  //let shotPosition
 
   function addShot(shotPosition){
     if (shotPosition > 0)cells[shotPosition].classList.add(shotClass)
@@ -122,22 +124,32 @@ function init() {
 
     // ! execution
     if (firing === keyCode || altFire === keyCode) {
-    
+      shotAudio()
       shotTimer = setInterval(() => {
         if (shotPosition > 0)  {
           removeShot(shotPosition)
           shotPosition -= width
           if (aliens.includes(shotPosition) === true) {
-            console.log('before',aliens)
-            
-            /*console.log(*/
+            // find index of alien i hit in the array
+            zombieHitAudio()
+            score += 100
+            scoreDisplay.innerHTML = score
+            //removeAliens()
+            //find the index of the alien and save as variable
+            const collision = aliens.find(alien => alien === shotPosition)
+            //console.log('collision', collision)
+            aliens.splice(aliens.indexOf(collision), 1)
+            //removes alen index from the alien array
+            //console.log('remaining', aliens)
+            //removeAliens()
             console.log('after', aliens)
+            removeShot()
+            
             createAliens()
             clearInterval(shotTimer)
             //console.log (aliens.splice(aliens.length - 1)) // ? need to target 
             // ? specific item in the array
-            score += 100
-            scoreDisplay.innerHTML = score
+            
           } else { 
             addShot(shotPosition)
           }
@@ -239,21 +251,55 @@ function init() {
         //console.log(aliens)
       } else if (!rowIsEven && aliens[0] % width !== 0) {
         aliensLeft()
+      } else if (aliens.includes(playerClass) === true) {
+        console.log(aliens.includes(playerClass) === true)
+        
         //clearInterval(timer)
         //aliensLeft()
       } else {
         aliensDown()
       }
     }, 1000) 
-
-     
-
-  
-
-
   }
 
+
+  // ! alien projectile
+  const bombClass = 'bomb'
   
+  function addBomb(bombPosition){
+    cells[bombPosition].classList.add(shotClass)
+  }
+
+  function removeBomb(bombPosition){
+    if (bombPosition < 99) cells[shotPosition].classList.remove(shotClass)
+  }
+
+
+
+
+
+  // ! audio functions ================================================================
+
+  function zombieHitAudio(){
+    audio.src = 'sounds/Zombie-hit.mp3'
+    audio.play()  
+  }
+
+  function shotAudio(){
+    audio.src = 'sounds/crossbow-shot.mp3'
+    audio.play()  
+  }
+
+  function zombieBomb(){
+    audio.src = 'sounds/Zprojectile.mp3'
+    audio.play()  
+  }
+  
+
+
+
+
+
   // ! game conditions score etc ======================================================================================================
   
   // ! alien
@@ -317,8 +363,12 @@ start.addEventListener('click', startGame)
 
   }
 //reset.addEventListener('click', resetGame)
-
-
+//prevent space bar from scrolling, but still allows for firing.
+  window.addEventListener('keydown', (event) => {  
+    if (event.keyCode === 32 && event.target === document.body) {  
+      event.preventDefault()
+    }  
+  })
   
 
 }
