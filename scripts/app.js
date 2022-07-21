@@ -4,14 +4,31 @@ function init() {
   const reset = document.querySelector('.reset')
   //console.log(reset)
   const scoreDisplay = document.querySelector('.showscore')
-  //console.log(scoreDisplay)
-  const livesDisplay = document.querySelector('.lives')
-  //console.log(livesDisplay)
-  const audio = document.querySelector('audio')
-  //console.log(audio)
+  console.log(scoreDisplay)
+  const livesDisplay = document.querySelector('.showlives')
+  console.log(livesDisplay)
+  
+  const audio1 = document.querySelector('.audio1')
+  console.log(audio1)
+  const audio2 = document.querySelector('.audio2')
+  console.log(audio2)
+  const audio3 = document.querySelector('.audio3')
+  console.log(audio3)
+  const audio4 = document.querySelector('.audio4')
+  console.log(audio4)
+  // multiple audio means that SFX aren't chopped or removed as each audio 
+  // function has a specific channel
   let score = 0
   let lives = 3
+  scoreDisplay.innerHTML = score
+  livesDisplay.innerHTML = lives
+  
 
+  
+  // ! player variables
+  const playerClass = 'player' 
+  const startPosition = 94
+  let currentPosition = startPosition
 
   
   // ! make the grid  =====================================================================
@@ -27,15 +44,13 @@ function init() {
   const cellCount = width * width
   const cells = []// targetting each div cell created 
   
-  // ! player variables
-  const playerClass = 'player' 
-  const startPosition = '94'
-  let currentPosition = startPosition
+
   
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      cell.innerText = i //remove once happy with design and no longer need to crate more functions for movement.
+      cell.innerText = i //remove once happy with design and no longer need to crate more 
+      // functions for movement.
       cell.dataset.index = i
       cells.push(cell)
       grid.appendChild(cell)
@@ -69,7 +84,7 @@ function init() {
     const right = 39
     const rightAlt = 68
     //const firing = 32
-    console.log(keyCode)
+    //console.log(keyCode)
     //use remove player function
     removePlayer(currentPosition)
 
@@ -143,7 +158,7 @@ function init() {
             //console.log('remaining', aliens)
             //removeAliens()
             console.log('after', aliens)
-            removeShot()
+            removeShot(shotPosition)
             
             createAliens()
             clearInterval(shotTimer)
@@ -159,13 +174,13 @@ function init() {
           clearInterval(shotTimer)
           //console.log('out of range')
         }
-      }, 300)
+      }, 200)
     }
 
 
   }
   
-  document.addEventListener('keydown', playerShoot)
+  document.addEventListener('keyup', playerShoot)
   
   
   // ! aliens ============================================================================================
@@ -173,7 +188,8 @@ function init() {
   // ! create aliens into grid
   //create alien array. Number should match up to squares in grid.
   // ! variables
-  let aliens = [2,3,4,5,6,12,13,14,15,16]  
+  let aliens = [62,63,64,65,66]  
+  
   const alienClass = 'alien'
   //console.log(typeof alienClass)
   
@@ -181,6 +197,7 @@ function init() {
   //create alien array into grid
   function createAliens(){
     // try for each alien in aliens array - add alien class tho th cell with index of each alien
+    deleteAliens()
     aliens.forEach(alien =>{
       cells[alien].classList.add(alienClass)
     })
@@ -190,7 +207,9 @@ function init() {
   
 
   function deleteAliens(){
-    aliens.forEach(alien => cells[alien].classList.remove(alienClass))
+    cells.forEach(cell => {
+      cell.classList.remove(alienClass)
+    })
   }
 
   function aliensLeft(){
@@ -250,15 +269,17 @@ function init() {
         //console.log(aliens)
       } else if (!rowIsEven && aliens[0] % width !== 0) {
         aliensLeft()
-      } else if (aliens.includes(playerClass) === true) {
-        console.log(aliens.includes(playerClass) === true)
-        
+      
         //clearInterval(timer)
         //aliensLeft()
       } else {
         aliensDown()
       }
-    }, 1000) 
+      if (aliens.find(alienIndex => alienIndex === currentPosition || alienIndex > 99)) {
+        console.log('game over')
+        clearInterval(alienTimer)
+      }
+    }, 500) 
   }
 
 
@@ -266,13 +287,16 @@ function init() {
   const bombClass = 'bomb'
   
   function addBomb(bombPosition){
-    cells[bombPosition].classList.add(shotClass)
+    cells[bombPosition].classList.add(bombClass)
   }
 
   function removeBomb(bombPosition){
-    if (bombPosition < 99) cells[shotPosition].classList.remove(shotClass)
+    cells[bombPosition].classList.remove(bombClass)
   }
 
+  function bombStart(){
+    const randomZombie = Math.floor(Math.random() * aliens.length)
+  }
 
 
 
@@ -280,74 +304,30 @@ function init() {
   // ! audio functions ================================================================
 
   function zombieHitAudio(){
-    audio.src = 'sounds/Zombie-hit.mp3'
-    audio.play()  
+    audio3.src = 'sounds/Zombie-hit.mp3'
+    audio3.play()  
   }
 
   function shotAudio(){
-    audio.src = 'sounds/crossbow-shot.mp3'
-    audio.play()  
+    audio2.src = 'sounds/crossbow-shot.mp3'
+    audio2.play()  
   }
 
   function zombieBomb(){
-    audio.src = 'sounds/Zprojectile.mp3'
-    audio.play()  
+    audio4.src = 'sounds/Zprojectile.mp3'
+    audio4.play()  
   }
   
   function walkingDead(){
-    audio.src = 'sounds/The_Walking_Dead_Theme_Song.mp3'
-    audio.play()  
+    audio1.src = 'sounds/The_Walking_Dead_Theme_Song.mp3'
+    audio1.play()  
   }
 
-
-
-  // ! game conditions score etc ======================================================================================================
-  
-  // ! alien
-  // function deadAlien() {
-  // If (alien currentPosition === shot currentPosition){
-  // removeAlien() + (add empty element to keep spacing
-  // score.innerHTML = score + 10 (whatever value a kill is worth)
-  // } else {
-  // shot -= 10 ( whatever width the grid is)
-  // }
-  
-  // if(shot < (bottom row lowest number) {
-  // shot += 10
-  // } else {
-  // return deadAlien()
-  //   },  1000)
-  
-  // alien collision -
-  // if (alien === player) {
-  // lives -=1 
-  // } else if {
-  // (alien ===  cell.length - 9)
-  // return gameOver()
-  // }
-
-  // ! hits
-  
-
-
-  
-  // shotTime = setInterval(() => {
-  
-  // shot = player.classList.add() + 10 
-  // if(shot < (bottom row lowest number) {
-  // shot += 10
-  // } else {
-  // return deadAlien()
-  //   },  1000)
-  // }
-  
-  // document.addEventListener('keyup', playerShoot)
-  
   // ! game conditions =====================================================================
   
   // ! game start
   function startGame() {
-    walkingDead()
+    walkingDead()  
     addPlayer(startPosition)
     createAliens()
     aliensMove()
@@ -355,16 +335,15 @@ function init() {
   start.addEventListener('click', startGame)
 
   // ! reset
-  //let score = 0
-  //let lives = 3
-  function resetGame(){
+  
   //scoreDisplay = score
   //livesDisplay = lives
-
-    //   removeAliens()
+  
+  function resetGame(){
+    window.location.reload()
 
   }
-  //reset.addEventListener('click', resetGame)
+  reset.addEventListener('click', resetGame)
   //prevent space bar from scrolling, but still allows for firing.
   window.addEventListener('keydown', (event) => {  
     if (event.keyCode === 32 && event.target === document.body) {  
