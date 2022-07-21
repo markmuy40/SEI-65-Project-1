@@ -1,20 +1,24 @@
 function init() {
   const start = document.querySelector('.play')
-  console.log(start)
+  //console.log(start)
   const reset = document.querySelector('.reset')
-  console.log(reset)
-  const scoreDisplay = document.querySelector('.score')
+  //console.log(reset)
+  const scoreDisplay = document.querySelector('.showscore')
   console.log(scoreDisplay)
   const livesDisplay = document.querySelector('.lives')
-  console.log(livesDisplay)
+  //console.log(livesDisplay)
   
+  let score = 0
+  let lives = 3
+
+
   
-  // ! make the grid  
+  // ! make the grid  =====================================================================
 
   // Grid container
   // ? target elements
   const grid = document.querySelector('.grid')
-console.log(grid)
+  //console.log(grid)
   // ? variables
   const width = 10 //change number if you want to add cells. 
   //check your CSS if the grid looks off. Think about the width of the contaner 
@@ -30,12 +34,12 @@ console.log(grid)
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      cell.innerText = i //remove once happy with design and no longer need to crate more functions for movement.
+      //cell.innerText = i //remove once happy with design and no longer need to crate more functions for movement.
       cell.dataset.index = i
       cells.push(cell)
       grid.appendChild(cell)
     }
-    addPlayer(startPosition)
+    
   }
   makeGrid()
   
@@ -64,20 +68,20 @@ console.log(grid)
     const right = 39
     const rightAlt = 68
     //const firing = 32
-    //console.log(keyCode)
+    console.log(keyCode)
     //use remove player function
     removePlayer(currentPosition)
 
     if ((left === keyCode || leftAlt === keyCode) && currentPosition % width !== 0) {
       currentPosition -= 1
-      console.log('left move')
+      //console.log('left move')
     } else if ((right === keyCode || rightAlt === keyCode) && currentPosition % width !== width - 1){
       currentPosition += 1
-      console.log('right move')
+      //console.log('right move')
     // } else if (firing === keyCode){
     //   console.log('shots fired')
-    } else {
-      console.log('invalid key')
+    //} else {
+      //console.log('invalid key')
     }
   
     addPlayer(currentPosition)
@@ -110,54 +114,45 @@ console.log(grid)
   function playerShoot(){
     const keyCode = event.keyCode
     const firing = 32
+    const altFire = 87
     
     // ! variables
     let shotPosition = currentPosition
-    let timer
+    let shotTimer
 
     // ! execution
-    if (firing === keyCode ) {
+    if (firing === keyCode || altFire === keyCode) {
     
-      timer = setInterval(() => {
+      shotTimer = setInterval(() => {
         if (shotPosition > 0)  {
           removeShot(shotPosition)
           shotPosition -= width
-          addShot(shotPosition)
-          console.log('shot  inside the interval',shotPosition)
-          console.log('aliens inside the interval', aliens)
-        //} else if (shotPosition === aliens) {
-          //console.log('matched')
+          if (aliens.includes(shotPosition) === true) {
+            console.log('before',aliens)
+            
+            /*console.log(*/
+            console.log('after', aliens)
+            createAliens()
+            clearInterval(shotTimer)
+            //console.log (aliens.splice(aliens.length - 1)) // ? need to target 
+            // ? specific item in the array
+            score += 100
+            scoreDisplay.innerHTML = score
+          } else { 
+            addShot(shotPosition)
+          }
+          
+          //console.log('shot  inside the interval',shotPosition)
+          //console.log('aliens inside the interval', aliens)
         } else {
-          clearInterval(timer)
+          clearInterval(shotTimer)
           //console.log('out of range')
         }
       }, 300)
     }
-  
-  
-    // if (cells.classList.contains.shotClass === cells.classList.contains.alienClass){
-    console.log('where aliens are', cell[aliens])
-    console.log('outside if loop', shotPosition)
-    //console.log('matched')
-    //} else {
-    //console.log('wtf?!')
-    //}
+
 
   }
-  /*if (shotPosition > 0)*/ 
-  //       removeShot(shotPosition)
-  //       shotPosition -= width
-  //       addShot(shotPosition)
-  //       console.log(shotPosition)
-      
-  //   } else {
-  //     clearInterval(timer)
-  //   }, 300)
-  //   }
-  // }
-  
-  
-  
   
   document.addEventListener('keydown', playerShoot)
   
@@ -232,10 +227,10 @@ console.log(grid)
 
   function aliensMove(){
     //variables
-    let timer
+    let alienTimer
 
     // ! execution
-    timer = setInterval(() =>{
+    alienTimer = setInterval(() =>{
       //console.log('movement', aliens)
       const rowIsEven = Math.floor(aliens[0] / 10) % 2 === 0
 
@@ -249,7 +244,7 @@ console.log(grid)
       } else {
         aliensDown()
       }
-    }, 500) 
+    }, 1000) 
 
      
 
@@ -286,18 +281,8 @@ console.log(grid)
 
   // ! hits
   
-  
-  // Const shotClass = 'shot' use image/icon
-  
-  // function addShot(position){
-  // cells[position].classList.add(shotClass)
-  // }
-  // function removeAlien(position){
-  // cells[position].classList.remove(shotClass)
-  // }
-  
-  // function playerShoot(){
-  // const fire = (keycode) || fire = div class
+
+
   
   // shotTime = setInterval(() => {
   
@@ -311,9 +296,12 @@ console.log(grid)
   
   // document.addEventListener('keyup', playerShoot)
   
+  // ! game conditions =====================================================================
+  
   // ! game start
   function startGame() {
-    //createAliens()
+    addPlayer(startPosition)
+    createAliens()
     aliensMove()
   }  
 start.addEventListener('click', startGame)
@@ -329,7 +317,6 @@ start.addEventListener('click', startGame)
 
   }
 //reset.addEventListener('click', resetGame)
-
 
 
   
