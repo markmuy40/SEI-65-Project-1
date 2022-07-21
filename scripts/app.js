@@ -8,7 +8,7 @@ function init() {
   const livesDisplay = document.querySelector('.lives')
   //console.log(livesDisplay)
   const audio = document.querySelector('audio')
-  console.log(audio)
+  //console.log(audio)
   let score = 0
   let lives = 3
 
@@ -147,8 +147,7 @@ function init() {
             
             createAliens()
             clearInterval(shotTimer)
-            //console.log (aliens.splice(aliens.length - 1)) // ? need to target 
-            // ? specific item in the array
+            
             
           } else { 
             addShot(shotPosition)
@@ -174,7 +173,7 @@ function init() {
   // ! create aliens into grid
   //create alien array. Number should match up to squares in grid.
   // ! variables
-  let aliens = [2,3,4,5,6,12,13,14,15,16]  //? this is global ==================================
+  let aliens = [2,3,4,5,6,12,13,14,15,16]  
   const alienClass = 'alien'
   //console.log(typeof alienClass)
   
@@ -295,8 +294,10 @@ function init() {
     audio.play()  
   }
   
-
-
+  function walkingDead(){
+    audio.src = 'sounds/The_Walking_Dead_Theme_Song.mp3'
+    audio.play()  
+  }
 
 
 
@@ -346,24 +347,25 @@ function init() {
   
   // ! game start
   function startGame() {
+    walkingDead()
     addPlayer(startPosition)
     createAliens()
     aliensMove()
   }  
-start.addEventListener('click', startGame)
+  start.addEventListener('click', startGame)
 
   // ! reset
-//let score = 0
-//let lives = 3
+  //let score = 0
+  //let lives = 3
   function resetGame(){
   //scoreDisplay = score
   //livesDisplay = lives
 
-    removeAliens()
+    //   removeAliens()
 
   }
-//reset.addEventListener('click', resetGame)
-//prevent space bar from scrolling, but still allows for firing.
+  //reset.addEventListener('click', resetGame)
+  //prevent space bar from scrolling, but still allows for firing.
   window.addEventListener('keydown', (event) => {  
     if (event.keyCode === 32 && event.target === document.body) {  
       event.preventDefault()
