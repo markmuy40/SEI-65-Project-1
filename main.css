@@ -30,16 +30,15 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
 }
 
 .lives { 
-  color: black; 
+  color: red; 
   padding-right: 400px;
 }
 
 .score {
-  color: black;
+  color: red;
 }
 .grid-container {
   display: flex;
@@ -171,7 +170,7 @@ padding: 30px;
   align-items: center;
 }
 
-/* player CSS */
+/* in-game images=========================================================*/
 .grid div.player {
   background: url(images/NicePng_daryl-dixon-png_1695079.png);
   background-repeat: no-repeat;
@@ -186,7 +185,7 @@ padding: 30px;
   background-position: center;
 }
 
-/* alien CSS */
+
 .grid div.alien {
   background: url(images/zombie.png);
   background-repeat: no-repeat;
@@ -200,4 +199,12 @@ padding: 30px;
   background-size: contain;
   background-position: center;
 }
+
+.grid div.blood {
+  background: url(images/bloodspatter.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
 
