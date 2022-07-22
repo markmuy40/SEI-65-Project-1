@@ -207,4 +207,9 @@ padding: 30px;
   background-position: center;
 }
 
-
+.grid div.bite {
+  background: url(images/art-italy-bite-marks-553582.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}

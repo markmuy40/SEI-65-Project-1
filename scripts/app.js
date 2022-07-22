@@ -39,18 +39,21 @@ function init() {
   const startPosition = 94
   console.log(startPosition)
   let currentPosition = startPosition
-  let zombieTimer
-  let bombTimer1
+  
 
   // ! firing variables
   const shotClass = 'shot'
   const hitClass = 'blood'
+  
 
   // ! Zombie variables
   let zombies = [2,3,4,5,6,7,12,13,14,15,16,17,22,23,24,25,26,27]  
   //create zombie array. Number should match up to squares in grid.
   const zombieClass = 'zombie'
-
+  const biteClass = 'bite'
+  let zombieTimer
+  let bombTimer1
+  
   // ! make the grid  =====================================================================
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
@@ -253,6 +256,8 @@ function init() {
             ouch()
             lives -= 1
             livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
+            cells[bombPosition].classList.add(biteClass)
+            setTimeout(() => (cells[bombPosition].classList.remove(biteClass)), 200)
             clearInterval(bombTimer2)
             if (lives === 0) {
               clearInterval(bombTimer1)
@@ -265,14 +270,15 @@ function init() {
         } else {
           clearInterval(bombTimer2)
         }
-      }, 1000)
+      }, 800)
     }, 2000)
   }
   
   // ! audio functions ================================================================
-  function zombieHitAudio(){
-    audio3.src = 'sounds/Zombie-hit.mp3'
-    audio3.play()  
+  // ! channels separated - SFX not cutting other sounds
+  function walkingDead(){
+    audio1.src = 'sounds/The_Walking_Dead_Theme_Song.mp3'
+    audio1.play()  
   }
 
   function shotAudio(){
@@ -280,19 +286,19 @@ function init() {
     audio2.play()  
   }
 
+  function zombieHitAudio(){
+    audio3.src = 'sounds/Zombie-hit.mp3'
+    audio3.play()  
+  }
+
   function zombieBomb(){
     audio4.src = 'sounds/Zprojectile.mp3'
     audio4.play()  
   }
   
-  function walkingDead(){
-    audio1.src = 'sounds/The_Walking_Dead_Theme_Song.mp3'
-    audio1.play()  
-  }
-
   function ouch(){
-    audio1.src = 'sounds/ouch.mp3'
-    audio1.play()  
+    audio5.src = 'sounds/ouch.mp3'
+    audio5.play()  
   }
 
   // ! game conditions =====================================================================
