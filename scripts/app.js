@@ -47,7 +47,7 @@ function init() {
   
 
   // ! Zombie variables
-  let zombies = [2,3,4,5,6,7,12,13,14,15,16,17,22,23,24,25,26,27]  
+  let zombies = [1,2,3,4,5,6,7,8,11,12,13,14,15,16,17,18,21,22,23,24,25,26,27,28]  
   //create zombie array. Number should match up to squares in grid.
   const zombieClass = 'zombie'
   const biteClass = 'bite'
@@ -221,9 +221,9 @@ function init() {
         clearInterval(zombieTimer)
         //console.log(!zombies.length)
         //console.log('after statement')
-        return gameOver()
+        return winner()
       }
-    }, 2000) 
+    }, 800) 
   }
  
   // ! zombie projectile ================================================================================= 
@@ -271,7 +271,7 @@ function init() {
           clearInterval(bombTimer2)
         }
       }, 800)
-    }, 2000)
+    }, 1600)
   }
   
   // ! audio functions ================================================================
@@ -319,6 +319,12 @@ function init() {
   }
   reset.addEventListener('click', resetGame)
 
+// ! winner
+  function winner(){
+    setTimeout(() => alert(`You scored ${score} points and cleared the Zombies!`), 200)
+    deleteZombies()
+    clearInterval(zombieTimer)
+  }
   // ! game over
   function gameOver(){
     setTimeout(() => alert(`You scored ${score} points!`), 200)
