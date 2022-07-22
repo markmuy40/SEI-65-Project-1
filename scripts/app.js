@@ -7,6 +7,8 @@ function init() {
   //console.log(scoreDisplay)
   const livesDisplay = document.querySelector('.showlives')
   //console.log(livesDisplay)
+  const grid = document.querySelector('.grid')
+  //console.log(grid)
   
   const audio1 = document.querySelector('.audio1')
   //console.log(audio1)
@@ -16,37 +18,40 @@ function init() {
   //console.log(audio3)
   const audio4 = document.querySelector('.audio4')
   //console.log(audio4)
+  const audio5 = document.querySelector('.audio5')
+  //console.log(audio4)
   // multiple audio means that SFX aren't chopped or removed as each audio 
   // function has a specific channel
+  // ! grid variables
+  const width = 10 //change number if you want to add cells. 
+  //change percentages of .grid div as well
+  const cellCount = width * width
+  const cells = []// targetting each div cell created 
+  
+  // ! score variables
   let score = 0
   let lives = 3
   scoreDisplay.innerHTML = score
-  livesDisplay.innerHTML = lives
-  
-
+  livesDisplay.innerHTML = '❤️'.repeat(lives)
   
   // ! player variables
   const playerClass = 'player' 
   const startPosition = 94
   console.log(startPosition)
   let currentPosition = startPosition
+  let zombieTimer
+  let bombTimer1
 
-  
+  // ! firing variables
+  const shotClass = 'shot'
+  const hitClass = 'blood'
+
+  // ! Zombie variables
+  let zombies = [2,3,4,5,6,7,12,13,14,15,16,17,22,23,24,25,26,27]  
+  //create zombie array. Number should match up to squares in grid.
+  const zombieClass = 'zombie'
+
   // ! make the grid  =====================================================================
-
-  // Grid container
-  // ? target elements
-  const grid = document.querySelector('.grid')
-  //console.log(grid)
-  // ? variables
-  const width = 10 //change number if you want to add cells. 
-  //check your CSS if the grid looks off. Think about the width of the contaner 
-  //and .div size using percentages.
-  const cellCount = width * width
-  const cells = []// targetting each div cell created 
-  
-
-  
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -56,14 +61,10 @@ function init() {
       cells.push(cell)
       grid.appendChild(cell)
     }
-    
   }
   makeGrid()
-  
-
 
   //! player functions ==================================================================================
-  
 
   // ! add player
   function addPlayer(position){
@@ -81,12 +82,11 @@ function init() {
     // ! variables
     const keyCode = event.keyCode
     const left = 37
-    const leftAlt = 65 // || left = div class
+    const leftAlt = 65 
     const right = 39
     const rightAlt = 68
-    //const firing = 32
     //console.log(keyCode)
-    //use remove player function
+    
     removePlayer(currentPosition)
 
     if ((left === keyCode || leftAlt === keyCode) && currentPosition % width !== 0) {
@@ -94,38 +94,13 @@ function init() {
       //console.log('left move')
     } else if ((right === keyCode || rightAlt === keyCode) && currentPosition % width !== width - 1){
       currentPosition += 1
-      //console.log('right move')
-    // } else if (firing === keyCode){
-    //   console.log('shots fired')
-    //} else {
-      //console.log('invalid key')
     }
-  
     addPlayer(currentPosition)
-    
-
   }
   document.addEventListener('keydown', playerMovement)
 
-  // ! FIRING ================================================================================
-  
-  // ! variables
-  const shotClass = 'shot'
-  const hitClass = 'blood'
-  //let shotPosition
+  // ! Firing ================================================================================
 
-  function addShot(hitPosition){
-    if (shotPosition > 0) {
-      cells[shotPosition].classList.add(shotClass)
-    }
-  }
-  function removeShot(shotPosition){
-    cells[shotPosition].classList.remove(shotClass)
-  }
-  
-  
-  
-  
   // ! shot functions
   function addShot(shotPosition){
     if (shotPosition > 0) {
@@ -133,14 +108,15 @@ function init() {
     }
   }
 
-  
-  
+  function removeShot(shotPosition){
+    cells[shotPosition].classList.remove(shotClass)
+  }
+
   function playerShoot(){
     const keyCode = event.keyCode
     const firing = 32
     const altFire = 87
-    
-    // ! variables
+    // ! local variables
     let shotPosition = currentPosition
     let shotTimer
 
@@ -151,21 +127,20 @@ function init() {
         if (shotPosition > 0) {
           removeShot(shotPosition)
           shotPosition -= width
-          if (aliens.includes(shotPosition) === true) {
-            // find index of alien i hit in the array
+          if (zombies.includes(shotPosition) === true) {
+            // find index of zombie hit in the array
             zombieHitAudio()
             score += 100
             scoreDisplay.innerHTML = score
-            //removeAliens()
-            //find the index of the alien and save as variable
-            const collision = aliens.find(alien => alien === shotPosition)
+            //find the index of the zombie and save as variable
+            const collision = zombies.find(zombie => zombie === shotPosition)
             //console.log('collision', collision)
-            //removes alien index from the alien array
-            aliens.splice(aliens.indexOf(collision), 1)
+            //removes zombie index from the zombie array
+            zombies.splice(zombies.indexOf(collision), 1)
             removeShot(shotPosition)
             cells[shotPosition].classList.add(hitClass)
             setTimeout(() => (cells[shotPosition].classList.remove(hitClass)), 100)
-            createAliens()
+            createZombies()
             clearInterval(shotTimer)
           } else { 
             addShot(shotPosition)
@@ -175,180 +150,126 @@ function init() {
         }
       }, 200)
     }
-
-
   }
-  
   document.addEventListener('keyup', playerShoot)
   
-  
-  // ! aliens ============================================================================================
-  
-  // ! create aliens into grid
-  //create alien array. Number should match up to squares in grid.
-  // ! variables
-  let aliens = [2,3,4,5,6,7,12,13,14,15,16,17,22,23,24,25,26,27]  
-  
-  const alienClass = 'alien'
-  //console.log(typeof alienClass)
-  
+  // ! Zombie functions ============================================================================================
+
   // ! execution
-  //create alien array into grid
-  function createAliens(){
-    // try for each alien in aliens array - add alien class tho th cell with index of each alien
-    deleteAliens()
-    aliens.forEach(alien => {
-      cells[alien].classList.add(alienClass)
-      
+  //create zombie array into grid
+  function createZombies(){
+    //'for each' zombie in zombies array, add zombie class into cell with index of each zombie.
+    deleteZombies()
+    zombies.forEach(zombie => {
+      cells[zombie].classList.add(zombieClass)
     })
   }
   // ! event
-  //createAliens()
+
   
 
-  function deleteAliens(){
+  function deleteZombies(){
     cells.forEach(cell => {
-      cell.classList.remove(alienClass)
+      cell.classList.remove(zombieClass)
     })
   }
 
-  function aliensLeft(){
-  // ! variables
-  //aliens in global variable
-    //console.log('left start', aliens)
-    deleteAliens()
-    // use variable 'aliens and modify by -1 (use map?)
-    aliens = aliens.map(alien => alien - 1)
-    //console.log('going left', aliens)
-    createAliens()
+  function zombiesLeft(){
+    deleteZombies()
+    zombies = zombies.map(alien => alien - 1)
+    //console.log('going left', zombies)
+    createZombies()
   }
-  // ! event
-  //aliensLeft()
-
-
-
-  function aliensRight(){
-  // ! variables
-  //aliens in global variable
-    //console.log('right start',aliens)
-    deleteAliens()
-    // use variable 'aliens and modify by +1 (use map?)
-    aliens = aliens.map(alien => alien + 1)
-    //console.log('going right', aliens)
-    createAliens()
+  
+  function zombiesRight(){
+    deleteZombies()
+    zombies = zombies.map(alien => alien + 1)
+    //console.log('going right', zombies)
+    createZombies()
   }
-  // ! event
-  //aliensRight()
-
-  function aliensDown(){
-  // ! variables
-  //aliens in global variable
-    //console.log('down start',aliens)
-    deleteAliens()
-    // use variable 'aliens and modify by +1 (use map?)
-    aliens = aliens.map(alien => alien + width)
-    //console.log('going down', aliens)
-    createAliens()
+  
+  function zombiesDown(){
+    deleteZombies()
+    zombies = zombies.map(zombie => zombie + width)
+    //console.log('going down', zombies)
+    createZombies()
   }
-  // ! event
-  //aliensDown()
 
   // ! movement
-
-  function aliensMove(){
-    //variables
-    let alienTimer
-
-    // ! execution
-    alienTimer = setInterval(() =>{
+  
+  function zombiesMove(){
+    zombieTimer = setInterval(() =>{
       //console.log('movement', aliens)
-      const rowIsEven = Math.floor(aliens[0] / 10) % 2 === 0
-      
-      if (rowIsEven && aliens[aliens.length - 1] % width !== width - 1){
-        aliensRight()
-        
+      const rowIsEven = Math.floor(zombies[0] / 10) % 2 === 0
+      if (rowIsEven && zombies[zombies.length - 1] % width !== width - 1){
+        zombiesRight()
         //console.log(aliens)
-      } else if (!rowIsEven && aliens[0] % width !== 0) {
-        aliensLeft()
-        
-      
-        //clearInterval(timer)
-        //aliensLeft()
+      } else if (!rowIsEven && zombies[0] % width !== 0) {
+        zombiesLeft()
       } else {
-        aliensDown()
-        
-        
+        zombiesDown()
       }
-      if (aliens.find(alienIndex => alienIndex === currentPosition || alienIndex > (width * width) - 2)) {
+      if (zombies.find(alienIndex => alienIndex === currentPosition || alienIndex > (width * width) - 2)) {
+        ouch()
         clearInterval(bombTimer1)
         gameOver()
-        clearInterval(alienTimer)
-      } else if (!aliens.length === true) {
-        clearInterval(alienTimer)
-        //console.log(!aliens.length)
+        clearInterval(zombieTimer)
+      } else if (!zombies.length === true) {
+        clearInterval(zombieTimer)
+        //console.log(!zombies.length)
         //console.log('after statement')
         return gameOver()
       }
     }, 2000) 
   }
-
-
-  // ! alien projectile 
-  // ?================================================================================= 
-  // const bombClass = 'bomb'
-  // let bombPosition
-  // function addBomb(bombPosition){
-  //   if (bombPosition < 99) cells[bombPosition].classList.add(bombClass)
-  // }
-
-
-  // function removeBomb(bombPosition){
-  //   cells[bombPosition].classList.remove(bombClass)
-  // }
-
-
-  // function bombStart(){
-  //   let bombTimer1 
-  //   let bombTimer2 
-  //   bombTimer1 = setInterval(() => {
-  //     const lastFour = aliens.slice(-4)
-  //     console.log(lastFour)
-  //     const randomIndex = Math.floor(Math.random() * (lastFour.length))
-  //     bombPosition = aliens[randomIndex]
-  //     console.log(aliens[randomIndex])
-  //     zombieBomb() // sfx
-    
-  //     bombTimer2 = setInterval(() => { 
-  //       if (bombPosition < (width * width) - 1) {          
-  //         removeBomb(bombPosition)
-  //         bombPosition += width
-  //         addBomb(bombPosition)
-  //         //console.log('bomb here', bombPosition)
-  //         //console.log('here i am', currentPosition)
-  //         if (bombPosition === currentPosition) {
-  //           console.log('if statement triggered')
-  //           lives -= 1
-  //           livesDisplay.innerHTML = lives
-  //           addBomb(bombPosition)
-  //         } else if (lives === 0) {
-  //           removeBomb(bombPosition)
-  //           gameOver()
-  //         }
-  //       } else if (bombPosition > (width * width) - width){
-  //         removeBomb(bombPosition)
-  //         clearInterval(bombTimer2)
-  //       }
-  //     }, 1000)
-  //   }, 2000)
+ 
+  // ! zombie projectile ================================================================================= 
+  const bombClass = 'bomb'
   
-  // }
+  function addBomb(bombPosition){
+    if (bombPosition < 99) cells[bombPosition].classList.add(bombClass)
+  }
+
+  function removeBomb(bombPosition){
+    cells[bombPosition].classList.remove(bombClass)
+  }
+
+  function bombStart(){    
+    bombTimer1 = setInterval(() => {
+      const lastFour = zombies.slice(-4)
+      console.log(lastFour)
+      const randomIndex = Math.floor(Math.random() * (lastFour.length))
+      let bombPosition = zombies[randomIndex]
+      console.log(zombies[randomIndex])
+      zombieBomb() // sfx
+      const bombTimer2 = setInterval(() => { 
+        removeBomb(bombPosition)
+        bombPosition += width
+        if (bombPosition < (width * width) - 1) {          
+          //console.log('bomb', bombPosition)
+          //console.log('player', currentPosition)
+          if (bombPosition === currentPosition) {
+            //console.log('if statement triggered')
+            ouch()
+            lives -= 1
+            livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
+            clearInterval(bombTimer2)
+            if (lives === 0) {
+              clearInterval(bombTimer1)
+              gameOver()
+              clearInterval(zombieTimer)
+            }
+          } else {
+            addBomb(bombPosition)
+          }
+        } else {
+          clearInterval(bombTimer2)
+        }
+      }, 1000)
+    }, 2000)
+  }
   
-  
-
-
-
   // ! audio functions ================================================================
-
   function zombieHitAudio(){
     audio3.src = 'sounds/Zombie-hit.mp3'
     audio3.play()  
@@ -369,48 +290,42 @@ function init() {
     audio1.play()  
   }
 
+  function ouch(){
+    audio1.src = 'sounds/ouch.mp3'
+    audio1.play()  
+  }
+
   // ! game conditions =====================================================================
   
   // ! game start
   function startGame() {
-    //walkingDead()  
+    walkingDead()  
     addPlayer(startPosition)
-    createAliens()
+    createZombies()
     bombStart()
-    aliensMove()
+    zombiesMove()
   }  
   start.addEventListener('click', startGame)
 
   // ! reset
-  
-  //scoreDisplay = score
-  //livesDisplay = lives
-  
   function resetGame(){
     window.location.reload()
-
   }
   reset.addEventListener('click', resetGame)
 
   // ! game over
   function gameOver(){
-    //deleteAliens()
-    //clearInterval(alienTimer)
-    //clearInterval(shotTimer)
-   
     setTimeout(() => alert(`You scored ${score} points!`), 200)
-
+    deleteZombies()
+    clearInterval(zombieTimer)
   }
 
-  //prevent space bar from scrolling, but still allows for firing.
+  // prevent space bar from scrolling, but still allows for firing.
   window.addEventListener('keydown', (event) => {  
     if (event.keyCode === 32 && event.target === document.body) {  
       event.preventDefault()
     }  
   })
-  
-
 }
-
 
 window.addEventListener('DOMContentLoaded', init)
