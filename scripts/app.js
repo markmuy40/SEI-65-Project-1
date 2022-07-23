@@ -1,4 +1,7 @@
 function init() {
+
+  // ! DOM Elements =======================================================================
+  
   const start = document.querySelector('.play')
   //console.log(start)
   const reset = document.querySelector('.reset')
@@ -9,7 +12,6 @@ function init() {
   //console.log(livesDisplay)
   const grid = document.querySelector('.grid')
   //console.log(grid)
-  
   const audio1 = document.querySelector('.audio1')
   //console.log(audio1)
   const audio2 = document.querySelector('.audio2')
@@ -19,9 +21,12 @@ function init() {
   const audio4 = document.querySelector('.audio4')
   //console.log(audio4)
   const audio5 = document.querySelector('.audio5')
-  //console.log(audio4)
+  //console.log(audio5)
   // multiple audio means that SFX aren't chopped or removed as each audio 
   // function has a specific channel
+  
+  // ! Global variables ====================================================================
+
   // ! grid variables
   const width = 10 //change number if you want to add cells. 
   //change percentages of .grid div as well
@@ -54,7 +59,7 @@ function init() {
   let zombieTimer
   let bombTimer1
   
-  // ! make the grid  =====================================================================
+  // ! make the grid  =======================================================================
   function makeGrid(){
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -67,7 +72,7 @@ function init() {
   }
   makeGrid()
 
-  //! player functions ==================================================================================
+  //! player functions ======================================================================
 
   // ! add player
   function addPlayer(position){
@@ -102,7 +107,7 @@ function init() {
   }
   document.addEventListener('keydown', playerMovement)
 
-  // ! Firing ================================================================================
+  // ! Firing ==============================================================================
 
   // ! shot functions
   function addShot(shotPosition){
@@ -156,9 +161,8 @@ function init() {
   }
   document.addEventListener('keyup', playerShoot)
   
-  // ! Zombie functions ============================================================================================
+  // ! Zombie functions ====================================================================
 
-  // ! execution
   //create zombie array into grid
   function createZombies(){
     //'for each' zombie in zombies array, add zombie class into cell with index of each zombie.
@@ -167,9 +171,6 @@ function init() {
       cells[zombie].classList.add(zombieClass)
     })
   }
-  // ! event
-
-  
 
   function deleteZombies(){
     cells.forEach(cell => {
@@ -226,7 +227,7 @@ function init() {
     }, 800) 
   }
  
-  // ! zombie projectile ================================================================================= 
+  // ! zombie projectile ==================================================================== 
   const bombClass = 'bomb'
   
   function addBomb(bombPosition){
@@ -274,7 +275,7 @@ function init() {
     }, 1600)
   }
   
-  // ! audio functions ================================================================
+  // ! audio functions ======================================================================
   // ! channels separated - SFX not cutting other sounds
   function walkingDead(){
     audio1.src = 'sounds/The_Walking_Dead_Theme_Song.mp3'
@@ -301,7 +302,7 @@ function init() {
     audio5.play()  
   }
 
-  // ! game conditions =====================================================================
+  // ! game conditions ======================================================================
   
   // ! game start
   function startGame() {
@@ -319,7 +320,7 @@ function init() {
   }
   reset.addEventListener('click', resetGame)
 
-// ! winner
+  // ! winner
   function winner(){
     setTimeout(() => alert(`You scored ${score} points and cleared the Zombies!`), 200)
     deleteZombies()
@@ -340,4 +341,4 @@ function init() {
   })
 }
 
-window.addEventListener('DOMContentLoaded', init)
+window.addEventListener('DOMContentLoaded', init) 
