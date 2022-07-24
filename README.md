@@ -116,9 +116,9 @@ I enjoyed getting plans and ideas drawn out, but I also realised the game was a 
 It took time to understand scope in JavaScript, with global and internal variables, and the effect it has on JavaScript time.  Whilst I understood the theory, this caused havoc with the timers used for automating functions.  Certain functions were accelerating the time intervals within the nested setInterval. Methodically, I went through the logic in steps. I used the console log to diagnose and understand where the issues were. You could see the accelerated movement produced and the glitchy playthrough.  
 
 I found it tricky to work the playerShoot function.  It contains 3 if statements, each nested inside the other:
-•	The firing conditions.
-•	Projectile movement. 
-•	Points and hit conditions.  
+* The firing conditions.
+* Projectile movement. 
+* Points and hit conditions.  
 By breaking down each step, before and after the condition being met, helped to work through the problem. 
 ![playerShoot2](./project-one-readme-images/playershoot%202.png)
  
@@ -156,14 +156,14 @@ My progress using HTML, CSS, JavaScript, and the Google Chrome Developer tool, f
 
 ### Bugs
 
-•	On the main screen you can move and start shooting the zombies before you have pressed start, so the zombies aren’t firing back/ running at you.
-•	The game continues to run, and some sounds end up being looped after you close the game end alert.
+*	On the main screen you can move and start shooting the zombies before you have pressed start, so the zombies aren’t firing back/ running at you.
+*	The game continues to run, and some sounds end up being looped after you close the game end alert.
 
 
 ### Future Improvements
  
-•	Go back and debug the issues mentioned previously.
-•	Create end game screens rather than use window alerts.
-•	Make an intro screen.
-•	Improve on the overall look.  
-•	Add in animations.
+*	Go back and debug the issues mentioned previously.
+*	Create end game screens rather than use window alerts.
+*	Make an intro screen.
+*	Improve on the overall look.  
+*	Add in animations.
