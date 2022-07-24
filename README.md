@@ -27,35 +27,35 @@ This was a 5 day solo project.
 ### Technologies Used 
 
 ##### HTML
-•	Created a boiler plate and set up to ensure communication between the scripts.
-•	div layout to allow for better manipulation in CSS and JavaScript.
-•	Added audio elements.
+*	Created a boiler plate and set up to ensure communication between the scripts.
+*	div layout to allow for better manipulation in CSS and JavaScript.
+*	Added audio elements.
 ##### CSS
-•	Extensive use of flexbox to manipulate the layout of the webpage.  Future planning for mobile platform. 
-•	Characters and other styling components.
-•	Overall styling.
+*	Extensive use of flexbox to manipulate the layout of the webpage.  Future planning for mobile platform. 
+*	Characters and other styling components.
+*	Overall styling.
 ##### JavaScript
-•	All in-game functions and player interactions.
-•	Using keycodes to allow multiple keys for player actions.
-•	Click events for reset and start buttons.
-•	Added audio using multiple channels.
-•	Changing images to show hits from projectiles and attacks.
-•	Automating movement using JavaScript time.
+*	All in-game functions and player interactions.
+*	Using keycodes to allow multiple keys for player actions.
+*	Click events for reset and start buttons.
+*	Added audio using multiple channels.
+*	Changing images to show hits from projectiles and attacks.
+*	Automating movement using JavaScript time.
 
 ##### Google Chrome 
 
-•	Developer Tools used for layout, CSS manipulation and using the console for debugging and working through logic. 
+*	Developer Tools used for layout, CSS manipulation and using the console for debugging and working through logic. 
 
 ### Brief
 
 The brief was to create a version of Space Invaders.
 
 ##### Requirements:
-•	The player should be able to clear at least one wave of aliens.
-•	The player’s score should be displayed at the end of the game.
+*	The player should be able to clear at least one wave of aliens.
+*	The player’s score should be displayed at the end of the game.
 
 ##### Challenges
-•	The main challenge here is the movement of large groups of aliens in formation and the animation of the bombs and player’s shots.  There are several approaches here with collision detection being the more challenging. 
+*	The main challenge here is the movement of large groups of aliens in formation and the animation of the bombs and player’s shots.  There are several approaches here with collision detection being the more challenging. 
 
 
 ### Planning 
@@ -64,12 +64,13 @@ Excalidraw used to sketch plans, ideas, and concepts for my design and thoughts 
 
 ![Excalidraw image](./project-one-readme-images/planning.png)
  
-##### Timeline
+#### Timeline
 
 During the planning phase, a timeline was important to keep on track of schedule and allow time for snags and unexpected speedhumps.
+
 ![timeline](./project-one-readme-images/timeline.png)
 
-#### **Pseudo code**
+#### Pseudo code
  
 
 The Pseudo code was an extension to what I wrote in my initial plans. A hybrid between the plain text and actual code.  Whilst these functions aren’t a working product, they gave me a stronger base to work from.
@@ -86,25 +87,26 @@ With all the previous planning in place I had a structure to follow. I started w
 ![HTML boiler plate](./project-one-readme-images/HTML%20boilerplate.png)
 ![CSS setup](./project-one-readme-images/CSS%20example.png)
 
-##### Building the grid and DOM elements
+#### Building the grid and DOM elements
 
 Next part of the plan was to build the grid using a JavaScript function.  Wireframing functions in JavaScript with the headers; variables, execution and event helped to add structure to the process.  Broke it down further with sectons for player functions, zombie movement and projectiles.  I also added in DOM elements and checked they were targeting the HTML element, verified using the Google Chrome developer tool.  
 ![makeGrid](./project-one-readme-images/makeGrid.png)
 ![DOM element testing](./project-one-readme-images/console%20log%20DOM%20element%20checks.png)
 
-##### Order of functions to be built
+#### Order of functions to be built
                   
 I had an order of coding for quick wins to give me more time in the later stages for the trickier functions.
 
 I also theorised that some of the functions were similar and could be used to rework the code for other functions. For example, player movement (with additional keycode input) and projectiles, with zombie projectiles being automated with timers. Then I had a code I could adapt for zombie movement, automating it with timers and the same for the bombs/rushing zombies
 ![playershoot](./project-one-readme-images/playerShoot.png)
 ![bombStart](./project-one-readme-images/bombstart.png)
-##### Working through problems methodically 
+#### Working through problems methodically 
 
 Throughout the process I spent time researching and checking my work.  I took breaks from coding to work on other aspects, like design and image collecting, ensuring all aspects were being worked on. This kept the timeline moving forward and aided in the learning process.  Using the console log was instrumental in fault finding and diagnostics with code errors and unexpected movement.
+
 ![console log example](./project-one-readme-images/console.log%20example.png)
 
-##### Finalising and clean up 
+#### Finalising and clean up 
 
 The final parts were clean-up of code, reformatting into an easily readable state and making functions easy to find when I decide to improve it later. 
 
@@ -124,6 +126,7 @@ By breaking down each step, before and after the condition being met, helped to 
  
  In a similar vein, the bombStart function was a fun challenge to work through as the time I had left to finish the project was tight.  It had three ‘if’ statements, nested within one another and inside two setInterval timers.  This was both a real challenge and satisfying when it worked. Many events are handled within one function. 
 In both situations, using and understanding how to manipulate the console log and analysing readouts were key to success.
+
 ![bombStart](./project-one-readme-images/bombstart.png)
 
 ### Wins
