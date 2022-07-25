@@ -33,12 +33,10 @@ function init() {
   console.log(startPosition)
   let currentPosition = startPosition
   
-
   // ! firing variables
   const shotClass = 'shot'
   const hitClass = 'blood'
   
-
   // ! Zombie variables
   let zombies = [1,2,3,4,5,6,7,8,11,12,13,14,15,16,17,18,21,22,23,24,25,26,27,28]  
   const zombieClass = 'zombie'
@@ -82,7 +80,6 @@ function init() {
     const right = 39
     const rightAlt = 68
 
-    
     removePlayer(currentPosition)
 
     if ((left === keyCode || leftAlt === keyCode) && currentPosition % width !== 0) {
@@ -214,10 +211,8 @@ function init() {
   function bombStart(){    
     bombTimer1 = setInterval(() => {
       const lastFour = zombies.slice(-4)
-      console.log(lastFour)
       const randomIndex = Math.floor(Math.random() * (lastFour.length))
       let bombPosition = zombies[randomIndex]
-      console.log(zombies[randomIndex])
       zombieBomb()
       const bombTimer2 = setInterval(() => { 
         removeBomb(bombPosition)
@@ -305,7 +300,7 @@ function init() {
     clearInterval(zombieTimer)
   }
 
-  // prevent space bar from scrolling, but still allows for firing.
+  // ! prevent space bar from scrolling, but still allows for firing.
   window.addEventListener('keydown', (event) => {  
     if (event.keyCode === 32 && event.target === document.body) {  
       event.preventDefault()
