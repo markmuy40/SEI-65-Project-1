@@ -31,7 +31,7 @@ This was a 5 day solo project.
 *	div layout to allow for better manipulation in CSS and JavaScript.
 *	Added audio elements.
 ##### CSS
-*	Extensive use of flexbox to manipulate the layout of the webpage.  Future planning for mobile platform. 
+*	Extensive use of flexbox to manipulate the layout of the webpage.  Future planning for mobile platforms. 
 *	Characters and other styling components.
 *	Overall styling.
 ##### JavaScript
@@ -55,12 +55,12 @@ The brief was to create a version of Space Invaders.
 *	The player’s score should be displayed at the end of the game.
 
 ##### Challenges
-*	The main challenge here is the movement of large groups of aliens in formation and the animation of the bombs and player’s shots.  There are several approaches here with collision detection being the more challenging. 
+*	The main challenge here is the movement of large groups of aliens in formation and the animation of the bombs and player’s shots.  There are several approaches here with collision detection being the most challenging. 
 
 
 ### Planning 
 
-Excalidraw used to sketch plans, ideas, and concepts for my design and thoughts behind the processes involved. I wrote down ideas on the functions I would need to create in plain text.  This would help in pseudo coding.  
+Excalidraw used to sketch plans, ideas, and concepts for my design and thoughts behind the processes involved. I wrote down ideas on the functions I would need to create in plain text.  This would help in pseudocoding.  
 
 ![Excalidraw image](./project-one-readme-images/planning.png)
  
@@ -70,10 +70,10 @@ During the planning phase, a timeline was important to keep on track of schedule
 
 ![timeline](./project-one-readme-images/timeline.png)
 
-#### Pseudo code
+#### Pseudocode
  
 
-The Pseudo code was an extension to what I wrote in my initial plans. A hybrid between the plain text and actual code.  Whilst these functions aren’t a working product, they gave me a stronger base to work from.
+The pseudocode was an extension to what I wrote in my initial plans. A hybrid between the plain text and actual code.  Whilst these functions aren’t a working product, they gave me a stronger base to work from.
 
 ![pseudo code](./project-one-readme-images/pseudo%20code.png)
 
@@ -89,7 +89,7 @@ With all the previous planning in place I had a structure to follow. I started w
 
 #### Building the grid and DOM elements
 
-Next part of the plan was to build the grid using a JavaScript function.  Wireframing functions in JavaScript with the headers; variables, execution and event helped to add structure to the process.  Broke it down further with sectons for player functions, zombie movement and projectiles.  I also added in DOM elements and checked they were targeting the HTML element, verified using the Google Chrome developer tool.  
+Next part of the plan was to build the grid using a JavaScript function.  Wireframing functions in JavaScript with the headers; variables, execution and event helped to add structure to the process.  Broke it down further with sections for player functions, zombie movement and projectiles.  I also added in DOM elements and checked they were targeting the HTML element, verified using the Google Chrome developer tool.  
 ![makeGrid](./project-one-readme-images/makeGrid.png)
 ![DOM element testing](./project-one-readme-images/console%20log%20DOM%20element%20checks.png)
 
@@ -145,7 +145,7 @@ I got to grips with the process of problem solving and working methodically, fin
 
 >‘Everyone has a plan until they get punched in the mouth' - Mike Tyson
 
-I am better prepared for planning future projects, thinking about the detail and function structure.  I planned a hybrid of pseudo code and looking back, they weren’t far off the actual coding. Making an ERD would set me up for planning functions better.
+I am better prepared for planning future projects, thinking about the detail and function structure.  I planned a hybrid of pseudocode and looking back, they weren’t far off the actual coding. Making an ERD would set me up for planning functions better.
 
 By adding all the above into a project management tool, I would gain more time to reach the stretch goals.  This goes back to the idea of spending quality time planning, so the sprint is more purposeful.
 
