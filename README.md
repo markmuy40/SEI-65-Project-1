@@ -9,7 +9,7 @@ In the fourth week of our course, we were tasked with making a retro game.  I ma
 
 ### Deployment Link 
 
-https://markmuy40.github.io/SEI-65-Projects/
+https://markmuy40.github.io/SEI-65-Project-1/
 
 ### Getting Started/Code Installation 
 
